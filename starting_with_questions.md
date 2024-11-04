@@ -42,17 +42,77 @@ Answer:
 Spain is the country with the most orders, followed by the US, and Madrid is the city with the most orders, followwed be Salem.
 
 
-
-
-
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
 
 
 SQL Queries:
 
+CREATE TABLE ttabc AS
+SELECT 
+	country, 
+	COUNT(v2_product_category)AS count_of_uses
+FROM all_sessions
+	WHERE country NOT LIKE '(not set)' 
+	AND country NOT LIKE 'not available in demo dataset' 
+	AND v2_product_category NOT LIKE '(not set)' 
+	AND v2_product_category NOT LIKE '${escCatTitle}'
+	GROUP BY country
+	ORDER BY COUNT(v2_product_category) DESC, country
+ 
+-----------------------------------------------------------------
 
+WITH this AS(
+SELECT 
+	country, 
+	v2_product_category,
+	COUNT(v2_product_category) AS count_of_uses
+FROM all_sessions
+	WHERE v2_product_category NOT LIKE '(not set)' 
+	AND v2_product_category NOT LIKE '${escCatTitle}'
+	GROUP BY country, v2_product_category
+)
 
-Answer:
+SELECT 
+	t.country, t.v2_product_category, t. count_of_uses, tt.count_of_uses AS tolal_uses
+FROM this t
+	JOIN ttabc tt ON t.country = tt.country
+	ORDER BY tt.count_of_uses DESC, t.count_of_uses DESC
+ 
+==================================================================
+
+CREATE TABLE ttab AS
+SELECT 
+	city, 
+	COUNT(v2_product_category)AS count_of_uses
+FROM all_sessions
+	WHERE city NOT LIKE '(not set)' 
+	AND city NOT LIKE 'not available in demo dataset' 
+	AND v2_product_category NOT LIKE '(not set)' 
+	AND v2_product_category NOT LIKE '${escCatTitle}'
+	GROUP BY city
+	ORDER BY COUNT(v2_product_category) DESC, city
+ 
+--------------------------------------------------------------------
+WITH this AS(
+SELECT 
+	city, 
+	v2_product_category,
+	COUNT(v2_product_category) AS count_of_uses
+FROM all_sessions
+	WHERE city NOT LIKE '(not set)' 
+	AND city NOT LIKE 'not available in demo dataset' 
+	AND v2_product_category NOT LIKE '(not set)' 
+	AND v2_product_category NOT LIKE '${escCatTitle}'
+	GROUP BY city, v2_product_category
+)
+
+SELECT 
+	t.city, t.v2_product_category, t. count_of_uses, tt.count_of_uses AS tolal_uses
+FROM this t
+	JOIN ttab tt ON t.city = tt.city
+	ORDER BY tt.count_of_uses DESC, t.count_of_uses DESC
+
+Answer:In the US, mens TShirts are the prevelent catagory, followed by youtube, but it's flipped in India.
 
 
 
