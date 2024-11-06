@@ -122,10 +122,62 @@ Answer:In the US, mens TShirts are the prevelent catagory, followed by youtube, 
 
 
 SQL Queries:
+WITH everything AS(
+	WITH that AS(
+		WITH this AS(
+			SELECT 
+				country,
+				v2_product_name AS name,
+				COUNT(v2_product_name) AS total
+			FROM all_sessions
+				WHERE country NOT LIKE '(not set)'
+				GROUP BY country, v2_product_name
+				ORDER BY total DESC, country
+		)
+		SELECT *,
+			RANK() OVER(PARTITION BY country ORDER BY total DESC) AS top 
+		FROM this
+	)
+	SELECT 
+		country, 
+		name, 
+		total 
+	FROM that
+		WHERE top = 1
+		ORDER BY total DESC
+)
+SELECT * FROM everything
 
-
+WITH everything AS(
+	WITH that AS(
+		WITH this AS(
+			SELECT 
+				city,
+				v2_product_name AS name,
+				COUNT(v2_product_name) AS total
+			FROM all_sessions
+				WHERE city NOT LIKE '(not set)'
+				AND city NOT LIKE 'not available in demo dataset'
+				GROUP BY city, v2_product_name
+				ORDER BY total DESC, city
+		)
+		SELECT *,
+			RANK() OVER(PARTITION BY city ORDER BY total DESC) AS top 
+		FROM this
+	)
+	SELECT 
+		city, 
+		name, 
+		total 
+	FROM that
+		WHERE top = 1
+		ORDER BY total DESC
+)
+SELECT * FROM everything
 
 Answer:
+The most popular answer in all cities was "Google Men's 100% Cotton Short Sleeve Hero Tee White", but interestingly mountain view has the most skewed orders towards "Nest® Cam Indoor Security Camera - USA".
+It's the same with countries, but with "22 oz YouTube Bottle Infuser" closer in second.
 
 
 
