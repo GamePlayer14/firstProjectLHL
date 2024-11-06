@@ -187,9 +187,31 @@ It's the same with countries, but with "22 oz YouTube Bottle Infuser" closer in 
 
 SQL Queries:
 
+WITH this AS(
+	SELECT
+		country,
+		SUM(total_transaction_revenue) AS revenue
+	FROM all_sessions
+		GROUP BY country
+)
+SELECT * FROM this
+	WHERE revenue IS NOT NULL
+	ORDER BY revenue DESC
 
+WITH this AS(
+	SELECT
+		city,
+		SUM(total_transaction_revenue) AS revenue
+	FROM all_sessions
+		GROUP BY city
+)
+SELECT * FROM this
+	WHERE revenue IS NOT NULL
+	ORDER BY revenue DESC
 
-Answer:
+Answer: The USA is the country with the most revenue with 13b
+San francisco is the city with the most revnue with 1.5b
+
 
 
 
