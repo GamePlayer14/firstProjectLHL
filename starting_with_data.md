@@ -31,11 +31,14 @@ Answer: Sales peak at around 7:00pm, and at their lowest at around 9:00am.
 
 
 
-Question 3: 
+Question 3: What are the most popular products, and how much do we have stocked?
 
 SQL Queries:
 
-Answer:
+SELECT name, ordered_quantity, stock_level FROM products
+ORDER BY ordered_quantity DESC
+
+Answer: Kickballs are the most popular product with 15,170 ordered, and we have a remaining stock of 723.
 
 
 
