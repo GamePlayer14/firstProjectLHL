@@ -21,6 +21,8 @@ OR city LIKE 'not available in demo dataset'
 
 ALTER TABLE analytics
 DROP COLUMN social_engagement_type;
+DROP COLUMN user_id;
+DROP COLUMN revenue;
 
 DELETE FROM analytics
 WHERE visit_id IN (
@@ -32,3 +34,9 @@ WHERE visit_id IN (
     HAVING COUNT(*) > 1
   ) AS duplicates
 );
+
+ALTER TABLE analytics
+ALTER COLUMN visit_start_time SET DATA TYPE timestamp with time zone
+USING to_timestamp(visit_start_time);
+
+it was around this time where i realized I shouldnt be altering the table, so I decided to stop there.
