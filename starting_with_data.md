@@ -2,15 +2,15 @@ Question 1: What is the average semtiment score for each country?
 
 SQL Queries:
 
-WITH this AS(
-SELECT 
-	DISTINCT a.country, 
-	AVG(sentiment_score)OVER(PARTITION BY a.country) AS avg_s_score
-FROM sales_report sr
-	JOIN all_sessions a ON sr.product_sku = a.product_sku
-)
-SELECT *, DENSE_RANK()OVER(ORDER BY avg_s_score DESC) FROM this
-	ORDER BY avg_s_score DESC
+	WITH this AS(
+	SELECT 
+		DISTINCT a.country, 
+		AVG(sentiment_score)OVER(PARTITION BY a.country) AS avg_s_score
+	FROM sales_report sr
+		JOIN all_sessions a ON sr.product_sku = a.product_sku
+	)
+	SELECT *, DENSE_RANK()OVER(ORDER BY avg_s_score DESC) FROM this
+		ORDER BY avg_s_score DESC
 
 Answer: Sint Maarten has the highest avg sentiment score of 0.9, and Gibraltar with the least at -0.5.
 
