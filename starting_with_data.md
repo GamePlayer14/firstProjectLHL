@@ -20,12 +20,12 @@ Question 2: what time do the most units get sold?
 
 SQL Queries:
 
-SELECT 
-	SUBSTRING(CONCAT(CAST(TO_TIMESTAMP(visit_start_time) AT TIME ZONE 'UTC' AS TIME)),0,3)AS time,
-	SUM(units_sold) 
-FROM analytics
-	GROUP BY time
-	ORDER BY time
+	SELECT 
+		SUBSTRING(CONCAT(CAST(TO_TIMESTAMP(visit_start_time) AT TIME ZONE 'UTC' AS TIME)),0,3)AS time,
+		SUM(units_sold) 
+	FROM analytics
+		GROUP BY time
+		ORDER BY time
 
 Answer: Sales peak at around 7:00pm, and at their lowest at around 9:00am.
 
@@ -35,8 +35,8 @@ Question 3: What are the most popular products, and how much do we have stocked?
 
 SQL Queries:
 
-SELECT name, ordered_quantity, stock_level FROM products
-ORDER BY ordered_quantity DESC
+	SELECT name, ordered_quantity, stock_level FROM products
+	ORDER BY ordered_quantity DESC
 
 Answer: Kickballs are the most popular product with 15,170 ordered, and we have a remaining stock of 723.
 
