@@ -41,6 +41,13 @@ USING to_timestamp(visit_start_time);
 
 it was around this time where i realized I shouldnt be altering the table, so I decided to stop there.
 
-heres some queries I had after the fact:
+here are some other examples of queries I had used:
 
-  SELECT time_on_site, CONCAT((time_on_site / 60),':',SUBSTRING(CAST(CAST(MOD(time_on_site,60)AS decimal)/100 AS name),3,2)) FROM analytics
+  WHERE city NOT LIKE '(not set)'
+  AND city NOT LIKE 'not available in demo dataset'
+
+	CONCAT(
+		(time_on_site / 60),
+		':',
+		SUBSTRING(CAST(CAST(MOD(time_on_site,60)AS decimal)/100 AS name),3,2)
+	) 
