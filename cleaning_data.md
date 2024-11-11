@@ -40,3 +40,7 @@ ALTER COLUMN visit_start_time SET DATA TYPE timestamp with time zone
 USING to_timestamp(visit_start_time);
 
 it was around this time where i realized I shouldnt be altering the table, so I decided to stop there.
+
+heres some queries I had after the fact:
+
+  SELECT time_on_site, CONCAT((time_on_site / 60),':',SUBSTRING(CAST(CAST(MOD(time_on_site,60)AS decimal)/100 AS name),3,2)) FROM analytics
